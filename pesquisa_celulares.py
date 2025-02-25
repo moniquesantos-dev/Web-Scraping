@@ -45,6 +45,11 @@ for produto in produtos:
     preco = produto.find('span', class_='andes-money-amount')
     if preco:
         preco = preco.text.strip()
+        
+        # Limpa o preço (remove "R$", substitui a "," por "." e converte em número flutuante)
+        preco_limpo = preco.replace("R$", "").replace(",", ".")
+        preco_numerico = float(preco_limpo)
+        
     else:
         preco = "Preço não encontrado"
         
@@ -66,6 +71,11 @@ for produto in produtos:
     quantidade_avaliacao = produto.find('span', class_='poly-reviews__total')
     if quantidade_avaliacao:
         quantidade_avaliacao = quantidade_avaliacao.text.strip()
+        
+         # Remover os parenteses e converter a string em número inteiro
+        limpar_avaliacao = quantidade_avaliacao.replace("(", "").replace(")", "")
+        converter_avaliacao = int(limpar_avaliacao)
+        
     else: 
         quantidade_avaliacao = "Sem avaliações"
         
@@ -74,13 +84,13 @@ for produto in produtos:
     limpar_url = urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, '', '', ''))
         
     print(f"Nome: {nome}")
-    print(f"Preço: {preco}")
+    print(f"Preço: {preco_numerico}")
     print(f"Link: {limpar_url}")
     print(f"Nota: {nota_avaliacao}")
-    print(f'Total de avaliações: {quantidade_avaliacao}')
+    print(f'Total de avaliações: {converter_avaliacao}')
     print("_" * 70)
     
-    dados_smartphones.append([nome, preco, limpar_url, nota_avaliacao, quantidade_avaliacao]) # formando a lista
+    dados_smartphones.append([nome, preco_numerico, limpar_url, nota_avaliacao, converter_avaliacao]) # formando a lista
     
 
 df = pd.DataFrame(dados_smartphones, columns=['Nome', 'Preço', 'Link', 'Nota', 'Total de avaliações'])
