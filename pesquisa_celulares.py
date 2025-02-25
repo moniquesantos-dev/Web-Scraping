@@ -47,8 +47,8 @@ for produto in produtos:
         preco = preco.text.strip()
         
         # Limpa o preço (remove "R$", substitui a "," por "." e converte em número flutuante)
-        preco_limpo = preco.replace("R$", "").replace(",", ".")
-        preco_numerico = float(preco_limpo)
+        preco_limpo = preco.replace("R$", "").replace(".", "")
+        # preco_numerico = float(preco_limpo)
         
     else:
         preco = "Preço não encontrado"
@@ -84,13 +84,13 @@ for produto in produtos:
     limpar_url = urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, '', '', ''))
         
     print(f"Nome: {nome}")
-    print(f"Preço: {preco_numerico}")
+    print(f"Preço: {preco_limpo}")
     print(f"Link: {limpar_url}")
     print(f"Nota: {nota_avaliacao}")
     print(f'Total de avaliações: {converter_avaliacao}')
     print("_" * 70)
     
-    dados_smartphones.append([nome, preco_numerico, limpar_url, nota_avaliacao, converter_avaliacao]) # formando a lista
+    dados_smartphones.append([nome, preco_limpo, limpar_url, nota_avaliacao, converter_avaliacao]) # formando a lista
     
 
 df = pd.DataFrame(dados_smartphones, columns=['Nome', 'Preço', 'Link', 'Nota', 'Total de avaliações'])
